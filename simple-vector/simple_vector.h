@@ -139,6 +139,10 @@ public:
     // вместимость вектора должна увеличиться вдвое, а для вектора вместимостью 0 стать равной 1
     Iterator Insert(ConstIterator pos, const Type& value) {
         auto index = std::distance(cbegin(), pos);
+
+        // Проверка на попадание индекса в адресное пространство вектора
+        assert(index >= 0 && index <= size_);
+
         if (size_ == capacity_) {
             if (size_ != 0) {
                 ArrayPtr<Type> tmp(size_);
@@ -165,6 +169,9 @@ public:
     
     Iterator Insert(ConstIterator pos, Type&& value) {
         auto index = std::distance(cbegin(), pos);
+
+        assert(index >= 0 && index <= size_);
+
         if (size_ == capacity_) {
             if (size_ != 0) {
                 ArrayPtr<Type> tmp(size_);
@@ -191,13 +198,13 @@ public:
     
     // "Удаляет" последний элемент вектора. Вектор не должен быть пустым
     void PopBack() noexcept {
-        if (size_ != 0) {
-            --size_;
-        }
+        assert(!IsEmpty());
+        --size_;
     }
     
     // Удаляет элемент вектора в указанной позиции
     Iterator Erase(ConstIterator pos) {
+        assert(!IsEmpty());
         auto index = std::distance(cbegin(), pos);
         std::move(&vector_[index + 1], end(), const_cast<Iterator>(pos));
         --size_;
