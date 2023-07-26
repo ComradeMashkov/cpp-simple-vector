@@ -55,18 +55,21 @@ public:
         std::copy(init.begin(), init.end(), begin());
     }
     
-    SimpleVector(const SimpleVector& other) {
+    SimpleVector(const SimpleVector& other)
+        : vector_(other.size_)
+        , size_(other.size_)
+        , capacity_(other.capacity_)
+    {
         ArrayPtr<Type> tmp(other.size_);
-        size_ = other.size_;
-        capacity_ = other.capacity_;
         std::copy(other.begin(), other.end(), &tmp[0]);
         vector_.swap(tmp);
     }
     
     SimpleVector(SimpleVector&& other)
         : vector_(other.size_)
+        , size_(std::move(other.size_))
+        , capacity_(std::move(other.capacity_))
     {
-        size_ = std::move(other.size_);
         vector_.swap(other.vector_);
         other.Clear();
     }
