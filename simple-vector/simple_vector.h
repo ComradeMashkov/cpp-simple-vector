@@ -230,7 +230,7 @@ public:
 
     // Сообщает, пустой ли массив
     bool IsEmpty() const noexcept {
-        return (size_ == 0 ? true : false);
+        return size_ == 0;
     }
 
     // Возвращает ссылку на элемент с индексом index
