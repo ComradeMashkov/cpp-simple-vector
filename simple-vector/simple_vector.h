@@ -106,7 +106,6 @@ public:
     void PushBack(const Type& item) {
         if (size_ < capacity_) {
             vector_[size_] = item;
-            ++size_;
         }
         
         else {
@@ -115,14 +114,13 @@ public:
             tmp[size_] = item;
             vector_.swap(tmp.vector_);
             capacity_ = tmp.capacity_;;
-            ++size_;
         }
+        ++size_;
     }
     
     void PushBack(Type&& item) {
         if (size_ < capacity_) {
             vector_[size_] = std::move(item);
-            ++size_;
         }
         
         else {
@@ -131,8 +129,8 @@ public:
             tmp[size_] = std::move(item);
             vector_.swap(tmp.vector_);
             capacity_ = tmp.capacity_;;
-            ++size_;
         }
+        ++size_;
     }
     
     // Вставляет значение value в позицию pos.
