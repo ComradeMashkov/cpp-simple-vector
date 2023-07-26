@@ -138,10 +138,10 @@ public:
     // Если перед вставкой значения вектор был заполнен полностью,
     // вместимость вектора должна увеличиться вдвое, а для вектора вместимостью 0 стать равной 1
     Iterator Insert(ConstIterator pos, const Type& value) {
-        auto index = std::distance(cbegin(), pos);
-
         // Проверка на попадание индекса в адресное пространство вектора
-        assert(index >= 0 && index <= size_);
+        assert(begin() <= pos && end() >= pos);
+
+        auto index = std::distance(cbegin(), pos);
 
         if (size_ == capacity_) {
             if (size_ != 0) {
@@ -168,9 +168,9 @@ public:
     }
     
     Iterator Insert(ConstIterator pos, Type&& value) {
-        auto index = std::distance(cbegin(), pos);
+        assert(begin() <= pos && end() >= pos);
 
-        assert(index >= 0 && index <= size_);
+        auto index = std::distance(cbegin(), pos);
 
         if (size_ == capacity_) {
             if (size_ != 0) {
@@ -235,6 +235,9 @@ public:
 
     // Возвращает ссылку на элемент с индексом index
     Type& operator[](size_t index) noexcept {
+        // Не знаю почему, но у меня VS Code сломался
+        // и он вообще перестал подсвечивать красным какие-либо ошибки
+        // компилятор (clang) чего-то тоже перестал предупреждать об этом  :/
         assert(index < size_);
         return vector_[index];
     }
