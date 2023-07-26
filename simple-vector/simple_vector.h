@@ -235,6 +235,7 @@ public:
 
     // Возвращает ссылку на элемент с индексом index
     Type& operator[](size_t index) noexcept {
+        assert(index >= 0 && index < size_);
         return vector_[index];
     }
 
@@ -292,37 +293,37 @@ public:
     // Возвращает итератор на начало массива
     // Для пустого массива может быть равен (или не равен) nullptr
     Iterator begin() noexcept {
-        return Iterator(&vector_[0]);
+        return Iterator(vector_.Get());
     }
 
     // Возвращает итератор на элемент, следующий за последним
     // Для пустого массива может быть равен (или не равен) nullptr
     Iterator end() noexcept {
-        return Iterator{&vector_[size_]};
+        return Iterator{vector_.Get() + size_};
     }
 
     // Возвращает константный итератор на начало массива
     // Для пустого массива может быть равен (или не равен) nullptr
     ConstIterator begin() const noexcept {
-        return ConstIterator{&vector_[0]};
+        return ConstIterator{vector_.Get()};
     }
 
     // Возвращает итератор на элемент, следующий за последним
     // Для пустого массива может быть равен (или не равен) nullptr
     ConstIterator end() const noexcept {
-        return ConstIterator{&vector_[size_]};
+        return ConstIterator{vector_.Get() + size_};
     }
 
     // Возвращает константный итератор на начало массива
     // Для пустого массива может быть равен (или не равен) nullptr
     ConstIterator cbegin() const noexcept {
-        return ConstIterator{&vector_[0]};
+        return ConstIterator{vector_.Get()};
     }
 
     // Возвращает итератор на элемент, следующий за последним
     // Для пустого массива может быть равен (или не равен) nullptr
     ConstIterator cend() const noexcept {
-        return ConstIterator{&vector_[size_]};
+        return ConstIterator{vector_.Get() + size_};
     }
     
 private:
